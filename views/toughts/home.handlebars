@@ -1,0 +1,63 @@
+<div class="home-header">
+    {{#if search}}
+        <h1>Você está buscando por: <span>{{search}}</span></h1>
+        {{#if toughtsQty}}
+            <p>Foram encontrados <span>{{toughtsQty}}</span> pensamentos</p>
+        {{else}}
+            <p>Nenhum pensamento foi encontrado para o termo <span>{{search}}</span></p>
+        {{/if}}
+    {{else}}
+    <h1>Todos os Pensamentos</h1>
+    {{/if}}
+    <form action="/home" method="get">
+        <input type="text" name="search" placeholder="Está buscando por algo?">
+        <input type="submit" class="btn" value="Buscar">
+    </form>
+    <div class="order-container">
+        <span>Ordenar por:</span>
+        <form action="/home" method="get">
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="order" value="new">
+            <button type="submit"><i class="bi bi-arrow-up"></i></button>
+        </form>
+        <form action="/home" method="get">
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="order" value="old">
+            <button type="submit"><i class="bi bi-arrow-down"></i></button>
+        </form>
+        <form action="/home" method="get">
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="like" value="like">
+            <button type="submit"><i class="fa-regular fa-face-smile"></i></button>
+        </form>
+        <form action="/home" method="get">
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="like" value="unlike">
+            <button type="submit"><i class="fa-regular fa-face-frown-open"></i></button>
+        </form>
+        <a href="/home">Limpar</a>
+    </div>
+</div>
+<div class="toughts-container">
+    {{#each toughts}}
+        <figure>
+            <blockquote>
+                "{{this.title}}"
+            </blockquote>
+            <figcaption>por <span>{{this.User.name}}</span></figcaption>
+            <form action="/toughts/like/" method="post">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <button class="likeBtn" type="submit">
+                {{#if this.liked}}
+                <i class="fa-solid fa-thumbs-up"></i>
+                {{else}}
+                <i class="fa-regular fa-thumbs-up"></i>
+                {{/if}}               
+                {{this.likes}}
+                </button>
+            </form>
+        </figure>
+    
+        
+    {{/each}}
+</div>
